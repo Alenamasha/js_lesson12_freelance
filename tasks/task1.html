@@ -11,44 +11,44 @@
 
 <body>
 
-    <a href="../index.html">Home Work №3</a>
+    <a href="../index.html">Home Work №12</a>
     <h1>Задача 1</h1>
     <p>
         Дано масив 30 випадкових цілих чисел. Підрахувати скільки було обмінів під час сортування бульбашкою.
     </p>
 
     <script>
-        const arrRandom = new Array(30).fill(0).map(elem => getRandomNumb(1, 50))
-        const resultBubbleSort = bubbleSort(arrRandom)
+        //1. Вводимо необхідні данні.
+        function getArrayOfRandomNumbers() {
+            const minArrayNum = 10
+            const maxArrayNum = 70
+            let arrayNum = []
+            for (let i = 0; i < 30; i++) {
+                const randomNum = minArrayNum + Math.floor(Math.random() * (maxArrayNum - minArrayNum + 1))
+                arrayNum.push(randomNum)
+            }
+            return arrayNum
+        }
+        const arrayOfRandomNumbers = getArrayOfRandomNumbers()
+        document.write(`<p> Масив 30 випадкових цілих чисел : <span>${arrayOfRandomNumbers}</span></p>`)
+        console.log(arrayOfRandomNumbers)
 
-        document.write(`Кількість обмінів = ${resultBubbleSort}`)
-
-        function bubbleSort(arr) {
-            let exchangeNumber = 0
-
-            let lengthArray = arr.length // зі скороченням довжини arr на 30% - 50% ітерацій менше
-            let changed
-
-            do {
-                changed = false
-
-                for (let i = 1; i < lengthArray; i++) {
-                    if (arr[i - 1] > arr[i]) {
-                        [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]]
-                        exchangeNumber++
-                        changed = true
-                    }
+        let changed
+        let exchanges = 0
+        do {
+            changed = false
+            for (let i = 1; i < arrayOfRandomNumbers.length; i++) {
+                if (arrayOfRandomNumbers[i - 1] > arrayOfRandomNumbers[i]) {
+                    let temp = arrayOfRandomNumbers[i - 1]
+                    arrayOfRandomNumbers[i - 1] = arrayOfRandomNumbers[i]
+                    arrayOfRandomNumbers[i] = temp
+                    changed = true
+                    exchanges++
                 }
-                lengthArray--
-            } while (changed)
-
-            return exchangeNumber
-        }
-
-        function getRandomNumb(minV, maxV) {
-            return minV + Math.floor(Math.random() * (maxV - minV + 1))
-        }
-
+            }
+        } while (changed)
+        document.write(`<p> Масив 30 випадкових цілих чисел сортованих бульбашкою : <span>${arrayOfRandomNumbers}</span></p>`)
+        document.write(`<p> Кількість обмінів під час сортування бульбашкою : <span>${exchanges}</span></p>`)
     </script>
 </body>
 

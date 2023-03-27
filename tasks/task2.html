@@ -10,47 +10,49 @@
 </head>
 
 <body>
-    <a href="../index.html">Home Work №3</a>
+    <a href="../index.html">Home Work №12</a>
     <h1>Задача 2</h1>
     <p>
         Дано масив 30 випадкових цілих чисел. Підрахувати скільки було обмінів під час сортування змішуванням.
     </p>
 
     <script>
-        const arrRandom = new Array(30).fill(0).map(el => getRandomNumber(1, 50))
-
-        const resultShakerSort = shakerSort(arrRandom)
-
-        document.write(`Кількість обмінів = ${resultShakerSort}`)
-
-        function shakerSort(array) {
-            let leftIndex = 0
-            let rightIndex = array.length - 1
-            let exchangeNumber = 0
-
-            while (leftIndex < rightIndex) {
-                for (let idx = leftIndex; idx < rightIndex; idx++) {
-                    if (array[idx] > array[idx + 1]) {
-                        [array[idx], array[idx + 1]] = [array[idx + 1], array[idx]]
-                        exchangeNumber++
-                    }
-                }
-                rightIndex--;
-
-                for (let idx = rightIndex; idx > leftIndex; idx--) {
-                    if (array[idx] < array[idx - 1]) {
-                        [array[idx], array[idx - 1]] = [array[idx - 1], array[idx]]
-                        exchangeNumber++
-                    }
-                }
-                leftIndex++;
+        //1. Вводимо необхідні данні.
+        function getArrayOfRandomNumbers() {
+            const minArrayNum = 10
+            const maxArrayNum = 70
+            let arrayNum = []
+            for (let i = 0; i < 30; i++) {
+                const randomNum = minArrayNum + Math.floor(Math.random() * (maxArrayNum - minArrayNum + 1))
+                arrayNum.push(randomNum)
             }
-            return exchangeNumber
+            return arrayNum
         }
+        const arrayOfRandomNumbers = getArrayOfRandomNumbers()
+        document.write(`<p> Масив 30 випадкових цілих чисел : <span>${arrayOfRandomNumbers}</span></p>`)
+        console.log(arrayOfRandomNumbers)
 
-        function getRandomNumber(minV, maxV) {
-            return Math.floor(Math.random() * (maxV - minV + 1)) + minV
+        let leftIndex = 0
+        let rightIndex = arrayOfRandomNumbers.length - 1
+        let exchanges = 0
+        while (leftIndex < rightIndex) {
+            for (let index = leftIndex; index < rightIndex; index++) {
+                if (arrayOfRandomNumbers[index] > arrayOfRandomNumbers[index + 1]) {
+                    [arrayOfRandomNumbers[index], arrayOfRandomNumbers[index + 1]] = [arrayOfRandomNumbers[index + 1], arrayOfRandomNumbers[index]]
+                    exchanges++
+                }
+            }
+            rightIndex--
+            for (let index = rightIndex; index > leftIndex; index--) {
+                if (arrayOfRandomNumbers[index] < arrayOfRandomNumbers[index - 1]) {
+                    [arrayOfRandomNumbers[index - 1], arrayOfRandomNumbers[index]] = [arrayOfRandomNumbers[index], arrayOfRandomNumbers[index - 1]]
+                    exchanges++
+                }
+            }
+            leftIndex++
         }
+        document.write(`<p> Масив 30 випадкових цілих чисел сортованих змішуванням : <span>${arrayOfRandomNumbers}</span></p>`)
+        document.write(`<p> Кількість обмінів під час сортування змішуванням : <span>${exchanges}</span></p>`)
     </script>
 </body>
 
